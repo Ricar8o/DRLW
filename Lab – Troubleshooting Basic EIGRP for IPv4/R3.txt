@@ -1,0 +1,32 @@
+conf t
+service password-encryption
+hostname R3
+enable secret class
+no ip domain lookup
+interface GigabitEthernet0/0
+ip address 192.168.3.1 255.255.255.0
+duplex auto
+speed auto
+interface Serial0/0/0
+ip address 192.168.13.2 255.255.255.252
+no shutdown
+interface Serial0/0/1
+bandwidth 128
+ip address 192.168.23.2 255.255.255.252
+no shutdown
+router eigrp 1
+network 192.168.3.0
+network 192.168.13.0 0.0.0.3
+passive-interface GigabitEthernet0/0
+eigrp router-id 3.3.3.3
+banner motd @
+ Unauthorized Access is Prohibited! @
+line con 0
+password cisco
+login
+logging synchronous
+line vty 0 4
+password cisco
+login
+transport input all
+end
