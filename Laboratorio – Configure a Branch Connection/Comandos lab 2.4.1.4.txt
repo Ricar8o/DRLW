@@ -1,0 +1,41 @@
+#R1
+username R3 password cisco
+interface g0/1
+ip address 10.0.0.1 255.255.255.128
+no shutdown
+interface s0/0/0
+ip address 172.16.0.1 255.255.255.252
+encapsulation ppp
+ppp authentication chap
+no shutdown
+interface s0/0/1
+ppp authentication chap
+no shutdown
+
+
+#R2
+username R1 password cisco
+no username R11
+int g0/1
+ip address 209.165.200.161 255.255.255.224
+interface s0/0/0
+no shutdown
+interface s0/0/1
+clock rate 64000
+encapsulation ppp
+ppp authentication chap
+no shutdown
+
+#R3
+username R2 password cisco
+interface GigabitEthernet0/1
+ip address 10.0.0.129 255.255.255.128
+no shutdown
+interface s0/0/0
+encapsulation ppp
+ppp authentication chap
+no shutdown
+interface s0/0/1
+ip address 172.16.0.6 255.255.255.252
+ppp authentication chap
+no shutdown

@@ -1,0 +1,26 @@
+------------L0,L1,L2 ------------
+**--Conexion con FTP con Server2--**
+ftp <<addressIPV6>>
+username: user01
+password: user01pass
+
+**--Conexion con SSH con Router 1--**
+ssh -l user01 <<addressIPV6>>
+
+-----------------------R1-----------------------
+enable 
+configure terminal
+ipv6 access-list G0-ACCESS
+permit ipv6 any any 
+exit
+
+interface GigabitEthernet 0/1
+no ipv6 traffic-filter G1-ACCESS out
+ipv6 traffic-filter G1-ACCESS in
+exit
+
+---#show ipv6 access-list#---
+no ipv6 access-list G2-ACCESS
+ipv6 access-list G2-ACCESS
+deny tcp 2001:DB8:CAFE:2::/64 any eq 22
+permit ipv6 any any
